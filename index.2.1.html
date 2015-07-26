@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>NgSamples</title>	
+	<link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.min.css">	
+</head>
+<body>
+	<!-- Exemplos de NgApp, NgModel, NgShow e NgHide -->
+	<section ng-app=>
+		<div class="container">	
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h1 class="text-primary" ng-show="checked">Olá {{nome}}, aqui é a AngularExpression.</h1>
+					<h5>Exemplo de MVVM (Model View and View Model)</h5>
+					<p ng-hide="checked"><strong>Nome:</strong> <input type="text" ng-model="nome"></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<p><strong>Salvar:</strong> <input type="checkbox" ng-model="checked"> 
+					<span class="lead">{{checked}}</span></p>
+				</div>
+			</div>
+		</div>
+	</section>	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>NgSamples 2</title>	
+	<link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.min.css">
+</head>
+<body>
+<!-- Exemplos de NgController, NgRepeat e NgClick-->
+	<section ng-app="MyList">
+		<div class="container" ng-controller="todosController">
+			<div class="row">
+				<h1 class="text-success">Exemplo de Lista Dinâmica</h1>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-success">					
+					<ul class="list-group">
+						<!-- Exemplo Sem NgRepeat -->
+						<!-- <li class="list-group-item">{{todos[1].nome}}</li>  -->
+						<!-- Exemplo Com NgRepeat -->
+						<!-- key e value determinam o elemento pra exclusão -->
+						<li ng-repeat="(k, todo) in todos" class="list-group-item">{{todo.nome}} <a class="glyphicon glyphicon-remove-circle text-danger" ng-click="delete(k)"></a> </li>
+					</ul>
+					<p class="lead"></p>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-success">					
+					<ul class="list-group">
+						<li ng-repeat="(k, todo) in todos" class="list-group-item list-group-item-warning">{{todo.prioridade}}</li>
+					</ul>						
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-lg-offset-3">
+					<div class="form-group has-success">
+						<legend>Adicionar Novo Registro</legend>
+						<label for="">Atividade</label>
+						<!-- lembre-se que o ng-model deve receber o value do dataset -->
+						<input type="text" class="form-control" id="" placeholder="Insira a Atividade" ng-model="todo.nome">
+						<label for="">Prioridade</label>
+						<input type="text" class="form-control" id="" placeholder="Insira a Prioridade" ng-model="todo.prioridade" >
+						<br><br>
+						<button type="submit" class="btn btn-large btn-block btn-success btn-lg" ng-click="add()"><span class="glyphicon glyphicon-plus"></span> Adicionar</button>
+					</div>			
+				</div>
+			</div> 
+		</div>
+	</section>	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+	<script src="script.js"></script>
+</body>
+</html>
