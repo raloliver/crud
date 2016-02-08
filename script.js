@@ -1,52 +1,75 @@
-var MyList = angular.module('MyList', []);
+var MyList = angular.module('MyList', ['ui.bootstrap', 'ngAlertMsgModule']);
 
-MyList.controller('todosController', function ($scope) 
-	{
-		$scope.todos = [
-			{
-				'nome'		:'English',
-				'prioridade': 1,
-			},
-			{
-				'nome'		:'IC',
-				'prioridade': 2
-			},
-			{
-				'nome'		:'AngularJS',
-				'prioridade': 1
-			},
-			{
-				'nome'		:'Freelas',
-				'prioridade': 2
-			}
-		]; 
-		// criação de array de tarefas no formato JSON
-		// array, deve-se usar []
-		// dentros das {} usa-se .
-
-		$scope.add	= function() //é possível também passar um indice, como no delete
-		{			
-			//1º criamos o objeto
-			/* código mais, mas pode ser passado em uma única linha como no exemplo abaixo
-			var todo = {
-				'nome'		:$scope.nome,
-				'prioridade':$scope.prioridade
-			}
-			*/
-			//$scope.todos.push($scope.todo); //adicionar novo registro ao final da fila (push, comando JS)
-			//$scope.todos.splice(0, 0, $scope.todo) //adicionar novo registro ao início da fila (splice, comando JS)
-			$scope.todos.splice(0, 1, $scope.todo) //substituir o primeiro item da fila (splice, comando JS)
-			//após incluir, limpamos os campos
-			/*
-			$scope.nome 	  = '';
-			$scope.prioridade = '';
-			*/
-			$scope.todo = '';
+MyList.controller('todosController', function ($scope) {
+	$scope.todos = [
+		{
+			'nome'		:'English',
+			'prioridade': 1,
+		},
+		{
+			'nome'		:'IC',
+			'prioridade': 2
+		},
+		{
+			'nome'		:'AngularJS',
+			'prioridade': 1
+		},
+		{
+			'nome'		:'Freelas',
+			'prioridade': 2
 		}
+	];
 
-		//função para remover o registro
-		$scope.delete	= function(i)
-		{			
-			$scope.todos.splice(i, 1); //a função vai remover o próprio elemento após a ação (splice comando JS)
-		}
-	});
+	$scope.add	= function() {
+		$scope.todos.splice(0, 0, $scope.todo)
+		$scope.todo = '';
+	}
+
+	$scope.delete	= function(i) {
+		$scope.todos.splice(i, 1);
+	}
+});
+
+angular.module('ngAlertMsgModule', ['ui.bootstrap'])
+  .directive('ngAlertClick', ['$modal',
+    function ($modal) {
+
+      var ModalCtrl = function($scope, $modalInstance) {
+
+        $scope.ok = function() {
+		    $modalInstance.close();
+        };
+
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel');
+        };
+      };
+
+      return {
+        restrict: 'A',
+        scope:{
+          ngAlertClick:"&",
+          item:"="
+        },
+        link: function(scope, element, attrs) {
+          element.bind('click', function () {
+            var message = attrs.ngAlertMsg || "<h4>Confirmar Exclusão ?</h4>";
+
+            var modalHtml = '<div class="modal-body">' + message + '</div>';
+            modalHtml += '<div class="modal-footer"><button class="btn btn-default btn-lg" ng-click="cancel()">Cancelar</button><button class="btn btn-danger btn-lg" ng-click="ok()">Deletar</button></div>';
+
+            var modalInstance = $modal.open({
+              template: modalHtml,
+              controller: ModalCtrl
+            });
+
+            modalInstance.result.then(function () {
+              	scope.ngAlertClick({item:scope.item});
+            }, function() {
+              	//
+            });
+          });
+        }
+      }
+    }
+  ]);
